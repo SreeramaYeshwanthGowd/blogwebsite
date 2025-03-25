@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Technical blog covering data engineering, machine learning, and AI topics with in-depth articles and tutorials">
+    <meta name="keywords" content="data engineering, machine learning, AI, MLOps, data warehousing, databricks, documentation, ETL pipelines, real-time analytics">
+    <meta name="author" content="Technical Blog">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Technical Blog - Data Engineering & AI Insights">
+    <meta property="og:description" content="Exploring the latest in data engineering, machine learning, and artificial intelligence with in-depth articles and tutorials">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://technicalblog.com">
+    <meta property="og:image" content="images/og-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Technical Blog - Data Engineering & AI Insights">
+    <meta name="twitter:description" content="Exploring the latest in data engineering, machine learning, and artificial intelligence with in-depth articles and tutorials">
+    <meta name="twitter:image" content="images/twitter-image.jpg">
+    <title>Technical Blog - Data Engineering & AI Insights</title>
+    <link rel="canonical" href="https://technicalblog.com">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/article-modal.css">
+    <link rel="stylesheet" href="css/compact-filters.css">
+    <link rel="stylesheet" href="css/search-alignment.css">
+    <link rel="stylesheet" href="css/background-animation.css">
+    <link rel="stylesheet" href="css/pixel-perfect.css">
+    <!-- Font imports -->
+    <link rel="preload" href="../fonts/ec1b1cbc512bc43e-s.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../fonts/d4e99c199dab3055-s.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Add more font preloads as needed -->
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">Technical Blog</a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#articles">Articles</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="search-container">
+                <label for="search-input" class="sr-only">Search articles</label>
+                <input type="text" id="search-input" placeholder="Search articles..." aria-label="Search articles">
+                <button id="search-button" aria-label="Search">Search</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Data Engineering & AI Insights</h1>
+                <p>Exploring the latest in data engineering, machine learning, and artificial intelligence</p>
+            </div>
+        </section>
+
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+            <div class="container">
+                <ol>
+                    <li><a href="/">Home</a></li>
+                    <li aria-current="page">Articles</li>
+                </ol>
+            </div>
+        </nav>
+
+        <section id="articles" class="content">
+            <div class="container">
+                <div class="sidebar">
+                    <div class="filter-container">
+                        <h3>Filter Articles</h3>
+                        <div class="filter-group">
+                            <h4>Categories</h4>
+                            <div class="filter-options">
+                                <label><input type="checkbox" value="data-engineering"> Data Engineering</label>
+                                <label><input type="checkbox" value="machine-learning"> Machine Learning</label>
+                                <label><input type="checkbox" value="ai"> Artificial Intelligence</label>
+                                <label><input type="checkbox" value="mlops"> MLOps</label>
+                                <label><input type="checkbox" value="data-warehousing"> Data Warehousing</label>
+                                <label><input type="checkbox" value="databricks"> Databricks</label>
+                                <label><input type="checkbox" value="documentation"> Documentation</label>
+                            </div>
+                        </div>
+                        <button id="apply-filters">Apply Filters</button>
+                    </div>
+                </div>
+
+                <div class="articles-container">
+                    <article class="article-card" data-category="data-engineering,real-time" data-id="1" itemscope itemtype="http://schema.org/BlogPosting">
+                        <div class="article-image">
+                            <img src="images/placeholder.jpg" alt="Visualization of real-time data processing dashboard with streaming analytics" itemprop="image">
+                        </div>
+                        <div class="article-content">
+                            <h2 itemprop="headline">Real-time Analytics</h2>
+                            <p class="article-meta" itemprop="datePublished">Published: March 15, 2025</p>
+                            <p class="article-excerpt" itemprop="description">Exploring the latest techniques in real-time data processing and analytics for modern data pipelines and business intelligence applications.</p>
+                            <a href="#" class="read-more" itemprop="url">Read More</a>
+                        </div>
+                        <meta itemprop="author" content="Technical Blog">
+                        <meta itemprop="keywords" content="data engineering, real-time, analytics, streaming data">
+                    </article>
+
+                    <article class="article-card" data-category="machine-learning,mlops" data-id="2" itemscope itemtype="http://schema.org/BlogPosting">
+                        <div class="article-image">
+                            <img src="images/placeholder.jpg" alt="MLOps workflow diagram showing CI/CD pipeline for machine learning models" itemprop="image">
+                        </div>
+                        <div class="article-content">
+                            <h2 itemprop="headline">Machine Learning & MLOps</h2>
+                            <p class="article-meta" itemprop="datePublished">Published: March 10, 2025</p>
+                            <p class="article-excerpt" itemprop="description">Best practices for implementing machine learning operations in production environments with automated testing and deployment workflows.</p>
+                            <a href="#" class="read-more" itemprop="url">Read More</a>
+                        </div>
+                        <meta itemprop="author" content="Technical Blog">
+                        <meta itemprop="keywords" content="machine learning, MLOps, CI/CD, production ML">
+                    </article>
+
+                    <article class="article-card" data-category="ai,generative" data-id="3" itemscope itemtype="http://schema.org/BlogPosting">
+                        <div class="article-image">
+                            <img src="images/placeholder.jpg" alt="AI-generated artwork showing the creative capabilities of generative models" itemprop="image">
+                        </div>
+                        <div class="article-content">
+                            <h2 itemprop="headline">Generative AI</h2>
+                            <p class="article-meta" itemprop="datePublished">Published: March 5, 2025</p>
+                            <p class="article-excerpt" itemprop="description">Exploring the capabilities and applications of generative AI models in creative industries, business automation, and content generation.</p>
+                            <a href="#" class="read-more" itemprop="url">Read More</a>
+                        </div>
+                        <meta itemprop="author" content="Technical Blog">
+                        <meta itemprop="keywords" content="AI, generative AI, machine learning, content generation">
+                    </article>
+
+                    <article class="article-card" data-category="data-engineering,databricks" data-id="4" itemscope itemtype="http://schema.org/BlogPosting">
+                        <div class="article-image">
+                            <img src="images/placeholder.jpg" alt="Databricks notebook interface showing ETL pipeline implementation" itemprop="image">
+                        </div>
+                        <div class="article-content">
+                            <h2 itemprop="headline">ETL Pipelines with Databricks</h2>
+                            <p class="article-meta" itemprop="datePublished">Published: February 28, 2025</p>
+                            <p class="article-excerpt" itemprop="description">Building efficient ETL pipelines using Databricks and Apache Spark for scalable data processing and transformation workflows.</p>
+                            <a href="#" class="read-more" itemprop="url">Read More</a>
+                        </div>
+                        <meta itemprop="author" content="Technical Blog">
+                        <meta itemprop="keywords" content="data engineering, Databricks, ETL, Apache Spark">
+                    </article>
+
+                    <article class="article-card" data-category="data-warehousing,data-engineering" data-id="5" itemscope itemtype="http://schema.org/BlogPosting">
+                        <div class="article-image">
+                            <img src="images/placeholder.jpg" alt="Modern data warehouse architecture diagram showing data flow" itemprop="image">
+                        </div>
+                        <div class="article-content">
+                            <h2 itemprop="headline">Data Warehousing Best Practices</h2>
+                            <p class="article-meta" itemprop="datePublished">Published: February 20, 2025</p>
+                            <p class="article-excerpt" itemprop="description">Modern approaches to data warehousing for analytics and business intelligence with focus on performance optimization and scalability.</p>
+                            <a href="#" class="read-more" itemprop="url">Read More</a>
+                        </div>
+                        <meta itemprop="author" content="Technical Blog">
+                        <meta itemprop="keywords" content="data warehousing, data engineering, analytics, business intelligence">
+                    </article>
+
+                    <article class="article-card" data-category="mlops,ci-cd" data-id="6" itemscope itemtype="http://schema.org/BlogPosting">
+                        <div class="article-image">
+                            <img src="images/placeholder.jpg" alt="CI/CD pipeline visualization for machine learning systems" itemprop="image">
+                        </div>
+                        <div class="article-content">
+                            <h2 itemprop="headline">CI/CD for ML Systems</h2>
+                            <p class="article-meta" itemprop="datePublished">Published: February 15, 2025</p>
+                            <p class="article-excerpt" itemprop="description">Implementing continuous integration and deployment pipelines for machine learning systems to ensure reliable model delivery.</p>
+                            <a href="#" class="read-more" itemprop="url">Read More</a>
+                        </div>
+                        <meta itemprop="author" content="Technical Blog">
+                        <meta itemprop="keywords" content="MLOps, CI/CD, DevOps, machine learning">
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about-section">
+            <div class="container">
+                <h2>About This Blog</h2>
+                <p>This technical blog is dedicated to sharing insights, best practices, and tutorials on data engineering, machine learning, and artificial intelligence. Our goal is to provide valuable content for data professionals at all levels, from beginners to experts.</p>
+                <p>We cover a wide range of topics including data pipelines, MLOps, model deployment, data warehousing, and emerging AI technologies. All articles are written by experienced practitioners with real-world expertise.</p>
+            </div>
+        </section>
+
+        <section id="contact" class="contact-section">
+            <div class="container">
+                <h2>Contact Us</h2>
+                <p>Have questions, suggestions, or want to contribute to the blog? We'd love to hear from you!</p>
+                
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-button">Send Message</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Technical Blog</h3>
+                    <p>Exploring the latest in data engineering, machine learning, and artificial intelligence with in-depth articles and tutorials.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#articles">Articles</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect With Us</h3>
+                    <div class="social-links">
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Technical Blog. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/article-links.js"></script>
+    <script src="js/compact-filters.js"></script>
+    <script src="js/enhanced-search.js"></script>
+    <script src="js/navigation-fix.js"></script>
+    <script src="js/background-animation.js"></script>
+</body>
+</html>
