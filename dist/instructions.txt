@@ -16,10 +16,7 @@ Security: HTTPS headers, CSP
 Accessibility: ARIA labels, keyboard nav
 Testing: Unit + E2E tests (Cypress)
 Monitoring: Perf analytics + error tracking
-DevOps:
-CI/CD pipeline (GitHub Actions)
-Add continuation.txt + Dockerize
-Commit changes + load balancing
+Add continuation.txt
 Deliver:
 ZIP: Runs via index.html (zero defects)
 Docs: audit report
