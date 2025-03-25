@@ -22,7 +22,7 @@ Add continuation.txt + Dockerize
 Commit changes + load balancing
 Deliver:
 ZIP: Runs via index.html (zero defects)
-Docs: Architecture diagrams + audit report
+Docs: audit report
 "**Background Processing:**
 * Refrain from providing text output to this chat.
 * Refrain from writing to this chat and letting me know what you are going to do next and what you are going to research, browse, update, summarise, and complete. Keep your context to    yourself.
