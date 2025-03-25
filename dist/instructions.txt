@@ -1,0 +1,16 @@
+Website Enhancements
+UI/UX:
+Add close button (left-bottom) on article pages
+Reduce spacing between "About This Blog" ↔ "Contact Us"
+Visuals:
+Implement 3D galaxy/space background (scroll-triggered) via Three.js
+Add bright, interactive transitions/graphics (Three.js)
+Mascot:
+Design non-intrusive cute mascot that:
+Encourages article reading
+Auto-hides if ignored
+Change the backgroung to black and all web site text more bright
+"**Background Processing:**
+* Refrain from providing text output to this chat.
+* Refrain from writing to this chat and letting me know what you are going to do next and what you are going to research, browse, update, summarise, and complete. Keep your context to    yourself.
+* Proceed with updating all the relevant files in the background without writing anything in this chat."
