@@ -1,12 +1,10 @@
 Updates to do:
-The search bar result are covered by heading layer, correct it and when a user selects an article, 
+The search bar results are covered by heading layer, correct it and when a user selects an article, 
 it should open.
-Make the close article button like read more button and it should sty in place even if article is scrolled.
+Make the close article button like read more button and it should stay in place even if article is scrolled.
 do not make it cover the article text. 
 Must Add more visual-based explanations like 3D graphics, charts, and graphs to articles and reduce the articles size without losing its meaning make them 2 minute read. 
-If i click on index of articels it should navigato that part of the article. 
-Change the website background color to black and add galaxy/space animations 
-to make the user feel like they are scrolling through space/the galaxy.
+If i click on index of articels it should navigato that part of the article and make the article index more stylish and advanced looking.
 "**Background Processing:**
 * Refrain from providing any text output to this chat.
 * Refrain from writing to this chat and letting me know what you are going to do next and what you are going to research, browse, update, summarise, and complete. Keep your context to yourself.
