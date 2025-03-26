@@ -1,17 +1,6 @@
-Critical Fixes:
-Error Handling:
-Fix Failed to fetch (API/data fetching)
-Resolve search result layering (z-index correction)
-UI Adjustments:
-Set background: #000000 (pitch black)
-Mascot visibility fix (CSS/JS debug)
-Feature Implementation:
-3D Visuals:
-🌌 Space/galaxy scroll bg (Three.js + smooth transitions)
-Animations:
-🎬 @keyframes scroll-driven animations
-Interactive charts (D3.js/Chart.js integration)
+Updates to do:
+The search bar should display results matching the keywords, and when a user selects an article, it should open. Filter article options should be a dropdown list. The close button, which appears after opening the article, should be displayed immediately when the user opens the article, not at the end. Streamline article content to be more succinct, using fewer words and more visual-based explanations like 3D graphics, charts, and graphs. Add an index-like structure to make article content navigation easy. Change the website background color to black and add galaxy/space animations to make the user feel like they are scrolling through space/the galaxy.
 "**Background Processing:**
 * Refrain from providing text output to this chat.
-* Refrain from writing to this chat and letting me know what you are going to do next and what you are going to research, browse, update, summarise, and complete. Keep your context to    yourself.
+* Refrain from writing to this chat and letting me know what you are going to do next and what you are going to research, browse, update, summarise, and complete. Keep your context to yourself.
 * Proceed with updating all the relevant files in the background without writing anything in this chat." 
