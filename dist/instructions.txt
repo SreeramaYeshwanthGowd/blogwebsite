@@ -1,5 +1,12 @@
 Updates to do:
-The search bar should display results matching the keywords, and when a user selects an article, it should open. Filter article options should be a dropdown list. The close button, which appears after opening the article, should be displayed immediately when the user opens the article, not at the end. Streamline article content to be more succinct, using fewer words and more visual-based explanations like 3D graphics, charts, and graphs. Add an index-like structure to make article content navigation easy. Change the website background color to black and add galaxy/space animations to make the user feel like they are scrolling through space/the galaxy.
+The search bar result are covered by heading layer, correct it and when a user selects an article, 
+it should open.
+Make the close article button like read more button and it should sty in place even if article is scrolled.
+do not make it cover the article text. 
+Must Add more visual-based explanations like 3D graphics, charts, and graphs to articles and reduce the articles size without losing its meaning make them 2 minute read. 
+If i click on index of articels it should navigato that part of the article. 
+Change the website background color to black and add galaxy/space animations 
+to make the user feel like they are scrolling through space/the galaxy.
 "**Background Processing:**
 * Refrain from providing any text output to this chat.
 * Refrain from writing to this chat and letting me know what you are going to do next and what you are going to research, browse, update, summarise, and complete. Keep your context to yourself.
