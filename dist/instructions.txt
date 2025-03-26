@@ -1,8 +1,9 @@
 Error loading article: Failed to fetch
-When i search the results of the search are cover by abovel layers - correct that
-Change the bg - color pitch to black
+When i search the results of the search are cover by above layers - correct that
+Change the background color pitch black
 Mascot functionality is not working, i cannot see the mascot - fix it
-Implement - 🌌 3D galaxy scroll (Three.js) + transitions
+Implement :
+🌌 3D galaxy and spavce backgroung scroll (Three.js) + transitions
 🎬 Scroll animations (@keyframes) + interactive charts
 "**Background Processing:**
 * Refrain from providing text output to this chat.
