@@ -1,116 +1,290 @@
-// 3D Background Animation
+// 3D Space/Galaxy Background Animation with Three.js
+import * as THREE from 'three';
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Create canvas element if it doesn't exist
-    let canvas = document.getElementById('background-canvas');
-    if (!canvas) {
-        const backgroundDiv = document.createElement('div');
-        backgroundDiv.className = 'background-animation';
-        
-        canvas = document.createElement('canvas');
-        canvas.id = 'background-canvas';
-        
-        backgroundDiv.appendChild(canvas);
-        document.body.appendChild(backgroundDiv);
+    // Create container for Three.js scene
+    let container = document.getElementById('background-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'background-container';
+        container.className = 'background-animation';
+        document.body.appendChild(container);
     }
     
-    // Set up canvas and context
-    const ctx = canvas.getContext('2d');
+    // Scene setup
+    const scene = new THREE.Scene();
     
-    // Make canvas full screen
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    // Camera setup
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
+    camera.position.z = 1000;
     
-    // Configuration
-    const config = {
-        particleCount: 50,
-        connectionDistance: 150,
-        moveSpeed: 0.5,
-        lineOpacity: 0.15,
-        particleColor: '#6c63ff',
-        lineColor: '#6c63ff'
+    // Renderer setup
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    container.appendChild(renderer.domElement);
+    
+    // Galaxy parameters
+    const params = {
+        count: 10000,
+        size: 0.01,
+        radius: 5,
+        branches: 5,
+        spin: 1,
+        randomness: 0.2,
+        randomnessPower: 3,
+        insideColor: '#ff6030',
+        outsideColor: '#1b3984',
+        stars: {
+            count: 2000,
+            size: 0.1,
+            color: '#ffffff'
+        },
+        nebula: {
+            count: 300,
+            size: 50,
+            opacity: 0.05
+        }
     };
     
-    // Particle class
-    class Particle {
-        constructor() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.vx = (Math.random() - 0.5) * config.moveSpeed;
-            this.vy = (Math.random() - 0.5) * config.moveSpeed;
-            this.radius = Math.random() * 2 + 1;
-        }
-        
-        update() {
-            // Move particle
-            this.x += this.vx;
-            this.y += this.vy;
-            
-            // Bounce off edges
-            if (this.x < 0 || this.x > canvas.width) {
-                this.vx = -this.vx;
-            }
-            
-            if (this.y < 0 || this.y > canvas.height) {
-                this.vy = -this.vy;
-            }
-        }
-        
-        draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-            ctx.fillStyle = config.particleColor;
-            ctx.fill();
-        }
-    }
+    // Galaxy geometry and material
+    let galaxyGeometry = null;
+    let galaxyMaterial = null;
+    let galaxyPoints = null;
+    let starPoints = null;
+    let nebulaPoints = null;
     
-    // Create particles
-    const particles = [];
-    for (let i = 0; i < config.particleCount; i++) {
-        particles.push(new Particle());
-    }
+    // Mouse position for parallax effect
+    const mouse = {
+        x: 0,
+        y: 0
+    };
     
-    // Animation loop
-    function animate() {
-        // Clear canvas
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Create galaxy
+    function generateGalaxy() {
+        // Dispose of old galaxy if it exists
+        if (galaxyPoints !== null) {
+            galaxyGeometry.dispose();
+            galaxyMaterial.dispose();
+            scene.remove(galaxyPoints);
+            scene.remove(starPoints);
+            scene.remove(nebulaPoints);
+        }
         
-        // Update and draw particles
-        particles.forEach(particle => {
-            particle.update();
-            particle.draw();
+        // Galaxy geometry
+        galaxyGeometry = new THREE.BufferGeometry();
+        const positions = new Float32Array(params.count * 3);
+        const colors = new Float32Array(params.count * 3);
+        
+        // Colors
+        const insideColor = new THREE.Color(params.insideColor);
+        const outsideColor = new THREE.Color(params.outsideColor);
+        
+        // Generate galaxy points
+        for (let i = 0; i < params.count; i++) {
+            const i3 = i * 3;
+            
+            // Position
+            const radius = Math.random() * params.radius;
+            const spinAngle = radius * params.spin;
+            const branchAngle = (i % params.branches) / params.branches * Math.PI * 2;
+            
+            const randomX = Math.pow(Math.random(), params.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * params.randomness * radius;
+            const randomY = Math.pow(Math.random(), params.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * params.randomness * radius;
+            const randomZ = Math.pow(Math.random(), params.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * params.randomness * radius;
+            
+            positions[i3] = Math.cos(branchAngle + spinAngle) * radius + randomX;
+            positions[i3 + 1] = randomY;
+            positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * radius + randomZ;
+            
+            // Color
+            const mixedColor = insideColor.clone();
+            mixedColor.lerp(outsideColor, radius / params.radius);
+            
+            colors[i3] = mixedColor.r;
+            colors[i3 + 1] = mixedColor.g;
+            colors[i3 + 2] = mixedColor.b;
+        }
+        
+        galaxyGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        galaxyGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        
+        // Material
+        galaxyMaterial = new THREE.PointsMaterial({
+            size: params.size,
+            sizeAttenuation: true,
+            depthWrite: false,
+            blending: THREE.AdditiveBlending,
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.8
         });
         
-        // Draw connections
-        for (let i = 0; i < particles.length; i++) {
-            for (let j = i + 1; j < particles.length; j++) {
-                const dx = particles[i].x - particles[j].x;
-                const dy = particles[i].y - particles[j].y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-                
-                if (distance < config.connectionDistance) {
-                    // Calculate opacity based on distance
-                    const opacity = config.lineOpacity * (1 - distance / config.connectionDistance);
-                    
-                    ctx.beginPath();
-                    ctx.moveTo(particles[i].x, particles[i].y);
-                    ctx.lineTo(particles[j].x, particles[j].y);
-                    ctx.strokeStyle = `rgba(108, 99, 255, ${opacity})`;
-                    ctx.lineWidth = 0.5;
-                    ctx.stroke();
-                }
-            }
+        // Points
+        galaxyPoints = new THREE.Points(galaxyGeometry, galaxyMaterial);
+        scene.add(galaxyPoints);
+        
+        // Create stars
+        const starGeometry = new THREE.BufferGeometry();
+        const starPositions = new Float32Array(params.stars.count * 3);
+        
+        for (let i = 0; i < params.stars.count; i++) {
+            starPositions[i * 3] = (Math.random() - 0.5) * 2000;
+            starPositions[i * 3 + 1] = (Math.random() - 0.5) * 2000;
+            starPositions[i * 3 + 2] = (Math.random() - 0.5) * 2000;
         }
+        
+        starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+        
+        const starMaterial = new THREE.PointsMaterial({
+            size: params.stars.size,
+            sizeAttenuation: true,
+            depthWrite: false,
+            blending: THREE.AdditiveBlending,
+            color: params.stars.color,
+            transparent: true,
+            opacity: 0.8
+        });
+        
+        starPoints = new THREE.Points(starGeometry, starMaterial);
+        scene.add(starPoints);
+        
+        // Create nebula clouds
+        const nebulaGeometry = new THREE.BufferGeometry();
+        const nebulaPositions = new Float32Array(params.nebula.count * 3);
+        const nebulaSizes = new Float32Array(params.nebula.count);
+        const nebulaColors = new Float32Array(params.nebula.count * 3);
+        
+        const nebulaColorOptions = [
+            new THREE.Color('#4da3ff'), // Blue
+            new THREE.Color('#ff4088'), // Pink
+            new THREE.Color('#6c63ff'), // Purple
+            new THREE.Color('#2ecc71')  // Green
+        ];
+        
+        for (let i = 0; i < params.nebula.count; i++) {
+            nebulaPositions[i * 3] = (Math.random() - 0.5) * 1000;
+            nebulaPositions[i * 3 + 1] = (Math.random() - 0.5) * 1000;
+            nebulaPositions[i * 3 + 2] = (Math.random() - 0.5) * 1000;
+            
+            nebulaSizes[i] = Math.random() * params.nebula.size + 10;
+            
+            const colorIndex = Math.floor(Math.random() * nebulaColorOptions.length);
+            const color = nebulaColorOptions[colorIndex];
+            
+            nebulaColors[i * 3] = color.r;
+            nebulaColors[i * 3 + 1] = color.g;
+            nebulaColors[i * 3 + 2] = color.b;
+        }
+        
+        nebulaGeometry.setAttribute('position', new THREE.BufferAttribute(nebulaPositions, 3));
+        nebulaGeometry.setAttribute('size', new THREE.BufferAttribute(nebulaSizes, 1));
+        nebulaGeometry.setAttribute('color', new THREE.BufferAttribute(nebulaColors, 3));
+        
+        const nebulaShader = {
+            vertexShader: `
+                attribute float size;
+                attribute vec3 color;
+                varying vec3 vColor;
+                void main() {
+                    vColor = color;
+                    vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+                    gl_PointSize = size * (300.0 / -mvPosition.z);
+                    gl_Position = projectionMatrix * mvPosition;
+                }
+            `,
+            fragmentShader: `
+                varying vec3 vColor;
+                void main() {
+                    float r = 0.0;
+                    vec2 cxy = 2.0 * gl_PointCoord - 1.0;
+                    r = dot(cxy, cxy);
+                    if (r > 1.0) {
+                        discard;
+                    }
+                    gl_FragColor = vec4(vColor, 1.0 - r);
+                }
+            `
+        };
+        
+        const nebulaMaterial = new THREE.ShaderMaterial({
+            uniforms: {},
+            vertexShader: nebulaShader.vertexShader,
+            fragmentShader: nebulaShader.fragmentShader,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false,
+            transparent: true,
+            vertexColors: true
+        });
+        
+        nebulaPoints = new THREE.Points(nebulaGeometry, nebulaMaterial);
+        nebulaPoints.material.opacity = params.nebula.opacity;
+        scene.add(nebulaPoints);
+    }
+    
+    generateGalaxy();
+    
+    // Track mouse movement for parallax effect
+    document.addEventListener('mousemove', (event) => {
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    });
+    
+    // Track scroll position for depth effect
+    let scrollY = window.scrollY;
+    window.addEventListener('scroll', () => {
+        scrollY = window.scrollY;
+    });
+    
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+    
+    // Animation loop
+    const clock = new THREE.Clock();
+    
+    function animate() {
+        const elapsedTime = clock.getElapsedTime();
+        
+        // Rotate galaxy
+        if (galaxyPoints) {
+            galaxyPoints.rotation.y = elapsedTime * 0.05;
+            
+            // Parallax effect based on mouse position
+            galaxyPoints.rotation.x = mouse.y * 0.2;
+            galaxyPoints.rotation.z = mouse.x * 0.2;
+            
+            // Depth effect based on scroll
+            galaxyPoints.position.z = -scrollY * 0.1;
+        }
+        
+        // Animate stars
+        if (starPoints) {
+            starPoints.rotation.y = elapsedTime * 0.02;
+            starPoints.rotation.x = mouse.y * 0.1;
+            starPoints.rotation.z = mouse.x * 0.1;
+        }
+        
+        // Animate nebula
+        if (nebulaPoints) {
+            nebulaPoints.rotation.y = elapsedTime * 0.01;
+            nebulaPoints.material.opacity = params.nebula.opacity + Math.sin(elapsedTime * 0.2) * 0.01;
+        }
+        
+        // Render
+        renderer.render(scene, camera);
         
         // Request next frame
         requestAnimationFrame(animate);
     }
     
-    // Handle window resize
-    window.addEventListener('resize', () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    });
-    
-    // Start animation
     animate();
+    
+    // Add transition effect when page loads
+    setTimeout(() => {
+        document.body.classList.add('loaded');
+    }, 500);
 });

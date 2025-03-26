@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const modalContent = document.createElement('div');
         modalContent.className = 'article-modal-content';
         
+        // Top-right close button
         const closeBtn = document.createElement('span');
         closeBtn.className = 'close-modal';
         closeBtn.innerHTML = '&times;';
@@ -52,9 +53,18 @@ document.addEventListener('DOMContentLoaded', function() {
         articleContent.className = 'article-full-content';
         articleContent.innerHTML = '<div class="loading">Loading article content...</div>';
         
+        // Bottom-left close button
+        const closeBtnBottom = document.createElement('div');
+        closeBtnBottom.className = 'close-modal-bottom';
+        closeBtnBottom.innerHTML = '&times; <span class="close-modal-bottom-text">Close Article</span>';
+        closeBtnBottom.addEventListener('click', () => {
+            document.body.removeChild(modal);
+        });
+        
         modalContent.appendChild(closeBtn);
         modalContent.appendChild(articleTitle);
         modalContent.appendChild(articleContent);
+        modalContent.appendChild(closeBtnBottom);
         modal.appendChild(modalContent);
         document.body.appendChild(modal);
         
@@ -69,11 +79,64 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(markdown => {
                 // Simple markdown to HTML conversion
                 const html = convertMarkdownToHtml(markdown);
-                articleContent.innerHTML = html;
+                
+                // Create article index
+                const headings = extractHeadings(html);
+                if (headings.length > 0) {
+                    const indexHtml = createArticleIndex(headings);
+                    articleContent.innerHTML = indexHtml + html;
+                } else {
+                    articleContent.innerHTML = html;
+                }
             })
             .catch(error => {
                 articleContent.innerHTML = `<div class="error">Error loading article: ${error.message}</div>`;
             });
+    }
+    
+    // Extract headings from HTML content
+    function extractHeadings(html) {
+        const headings = [];
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const headingElements = doc.querySelectorAll('h2, h3');
+        
+        headingElements.forEach((heading, index) => {
+            const id = `heading-${index}`;
+            heading.id = id;
+            headings.push({
+                id: id,
+                text: heading.textContent,
+                level: heading.tagName.toLowerCase()
+            });
+        });
+        
+        return headings;
+    }
+    
+    // Create article index navigation
+    function createArticleIndex(headings) {
+        let indexHtml = `
+            <div class="article-index">
+                <div class="article-index-title">Article Contents</div>
+                <ul class="article-index-list">
+        `;
+        
+        headings.forEach(heading => {
+            const indentClass = heading.level === 'h3' ? 'article-index-indent' : '';
+            indexHtml += `
+                <li class="article-index-item ${indentClass}">
+                    <a href="#${heading.id}" class="article-index-link">${heading.text}</a>
+                </li>
+            `;
+        });
+        
+        indexHtml += `
+                </ul>
+            </div>
+        `;
+        
+        return indexHtml;
     }
     
     // Simple markdown to HTML converter

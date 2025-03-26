@@ -64,6 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             `;
             searchResults.classList.add('active');
+            searchResults.style.display = 'block';
             return;
         }
         

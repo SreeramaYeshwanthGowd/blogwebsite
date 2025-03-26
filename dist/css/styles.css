@@ -2,8 +2,8 @@
 
 :root {
   /* Color scheme */
-  --primary-bg: #1a1f36;
-  --secondary-bg: #232a47;
+  --primary-bg: #000000; /* Changed to pitch black as per requirements */
+  --secondary-bg: #0a0a14;
   --text-color: #ffffff;
   --text-secondary: #b0b7c9;
   --accent-purple: #6c63ff;
@@ -35,6 +35,7 @@ body {
   color: var(--text-color);
   line-height: 1.6;
   overflow-x: hidden;
+  position: relative; /* For positioning the space background */
 }
 
 a {
@@ -62,16 +63,19 @@ img {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1.5rem;
+  position: relative; /* For proper z-index stacking */
+  z-index: 2; /* Above the space background */
 }
 
 /* Header styles */
 header {
-  background-color: var(--primary-bg);
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
   padding: 1rem 0;
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px); /* Blur effect for modern browsers */
 }
 
 header .container {
@@ -84,6 +88,7 @@ header .container {
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--text-color);
+  text-shadow: 0 0 10px rgba(108, 99, 255, 0.5); /* Glow effect */
 }
 
 nav ul {
@@ -147,12 +152,15 @@ nav ul li a.active::after {
 .hero {
   padding: 5rem 0;
   text-align: center;
-  background-color: var(--secondary-bg);
+  background-color: transparent; /* Changed to transparent to show space background */
+  position: relative;
+  z-index: 2;
 }
 
 .hero h1 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
+  text-shadow: 0 0 15px rgba(108, 99, 255, 0.7); /* Glow effect */
 }
 
 .hero p {
@@ -165,6 +173,8 @@ nav ul li a.active::after {
 /* Content section */
 .content {
   padding: 3rem 0;
+  position: relative;
+  z-index: 2;
 }
 
 .content .container {
@@ -178,9 +188,11 @@ nav ul li a.active::after {
 }
 
 .filter-container {
-  background-color: var(--secondary-bg);
+  background-color: rgba(10, 10, 20, 0.7); /* Semi-transparent dark background */
   padding: 1.5rem;
   border-radius: var(--border-radius);
+  backdrop-filter: blur(5px); /* Blur effect for modern browsers */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .filter-container h3 {
@@ -238,16 +250,17 @@ nav ul li a.active::after {
 }
 
 .article-card {
-  background-color: var(--secondary-bg);
+  background-color: rgba(10, 10, 20, 0.7); /* Semi-transparent dark background */
   border-radius: var(--border-radius);
   overflow: hidden;
-  box-shadow: var(--box-shadow);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+  backdrop-filter: blur(5px); /* Blur effect for modern browsers */
 }
 
 .article-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 30px rgba(108, 99, 255, 0.2);
 }
 
 .article-image {
@@ -322,7 +335,10 @@ nav ul li a.active::after {
 /* About and Contact sections */
 .about-section, .contact-section {
   padding: 4rem 0;
-  background-color: var(--secondary-bg);
+  background-color: rgba(10, 10, 20, 0.7); /* Semi-transparent dark background */
+  position: relative;
+  z-index: 2;
+  backdrop-filter: blur(5px); /* Blur effect for modern browsers */
 }
 
 .about-section .container, .contact-section .container {
@@ -375,8 +391,11 @@ nav ul li a.active::after {
 
 /* Footer */
 footer {
-  background-color: var(--primary-bg);
+  background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black */
   padding: 3rem 0 1.5rem;
+  position: relative;
+  z-index: 2;
+  backdrop-filter: blur(10px); /* Blur effect for modern browsers */
 }
 
 .footer-content {
@@ -439,8 +458,8 @@ footer {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1;
-  opacity: 0.05;
+  z-index: 1; /* Behind content but above body background */
+  opacity: 1; /* Increased from 0.05 to make it more visible */
   pointer-events: none;
 }
 
@@ -452,7 +471,9 @@ footer {
 /* Breadcrumbs */
 .breadcrumbs {
   padding: 1rem 0;
-  background-color: var(--primary-bg);
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  position: relative;
+  z-index: 2;
 }
 
 .breadcrumbs ol {
@@ -468,6 +489,22 @@ footer {
   content: '/';
   margin-left: 0.5rem;
   color: var(--text-secondary);
+}
+
+/* Star particles */
+.star {
+  position: absolute;
+  background-color: #fff;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0.8;
+  animation: twinkle 4s infinite alternate;
+}
+
+@keyframes twinkle {
+  0% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+  100% { opacity: 0.3; }
 }
 
 /* Responsive styles */

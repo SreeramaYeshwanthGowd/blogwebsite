@@ -1,33 +1,205 @@
-// Filter functionality for the technical blog
-
+// Dropdown filter functionality for the technical blog
 document.addEventListener('DOMContentLoaded', function() {
     const filterContainer = document.querySelector('.filter-container');
-    const applyFiltersBtn = document.getElementById('apply-filters');
     
-    if (filterContainer && applyFiltersBtn) {
+    if (filterContainer) {
+        convertToDropdownFilters();
         initializeFilters();
     }
 });
 
+function convertToDropdownFilters() {
+    const filterContainer = document.querySelector('.filter-container');
+    const filterGroups = document.querySelectorAll('.filter-group');
+    
+    // Clear existing filter container
+    const filterContainerHTML = filterContainer.innerHTML;
+    filterContainer.innerHTML = '<h3>Filter Articles</h3>';
+    
+    // Create categories dropdown
+    const categoriesDropdown = document.createElement('div');
+    categoriesDropdown.className = 'filter-dropdown';
+    categoriesDropdown.innerHTML = `
+        <div class="filter-dropdown-header">
+            <span class="filter-dropdown-title">Categories</span>
+            <span class="filter-dropdown-icon">▼</span>
+        </div>
+        <div class="filter-dropdown-content">
+            <div class="filter-option">
+                <input type="checkbox" id="data-engineering" value="data-engineering">
+                <label for="data-engineering">Data Engineering</label>
+            </div>
+            <div class="filter-option">
+                <input type="checkbox" id="machine-learning" value="machine-learning">
+                <label for="machine-learning">Machine Learning</label>
+            </div>
+            <div class="filter-option">
+                <input type="checkbox" id="ai" value="ai">
+                <label for="ai">Artificial Intelligence</label>
+            </div>
+            <div class="filter-option">
+                <input type="checkbox" id="mlops" value="mlops">
+                <label for="mlops">MLOps</label>
+            </div>
+            <div class="filter-option">
+                <input type="checkbox" id="data-warehousing" value="data-warehousing">
+                <label for="data-warehousing">Data Warehousing</label>
+            </div>
+            <div class="filter-option">
+                <input type="checkbox" id="databricks" value="databricks">
+                <label for="databricks">Databricks</label>
+            </div>
+            <div class="filter-option">
+                <input type="checkbox" id="documentation" value="documentation">
+                <label for="documentation">Documentation</label>
+            </div>
+            <div class="filter-actions">
+                <button class="clear-filters">Clear</button>
+                <button class="apply-filters">Apply</button>
+            </div>
+        </div>
+    `;
+    
+    // Create date dropdown
+    const dateDropdown = document.createElement('div');
+    dateDropdown.className = 'filter-dropdown';
+    dateDropdown.innerHTML = `
+        <div class="filter-dropdown-header">
+            <span class="filter-dropdown-title">Date</span>
+            <span class="filter-dropdown-icon">▼</span>
+        </div>
+        <div class="filter-dropdown-content">
+            <div class="filter-option">
+                <input type="checkbox" id="last-week" value="last-week">
+                <label for="last-week">Last Week</label>
+            </div>
+            <div class="filter-option">
+                <input type="checkbox" id="last-month" value="last-month">
+                <label for="last-month">Last Month</label>
+            </div>
+            <div class="filter-option">
+                <input type="checkbox" id="last-year" value="last-year">
+                <label for="last-year">Last Year</label>
+            </div>
+            <div class="filter-actions">
+                <button class="clear-filters">Clear</button>
+                <button class="apply-filters">Apply</button>
+            </div>
+        </div>
+    `;
+    
+    // Add selected filters display
+    const selectedFiltersContainer = document.createElement('div');
+    selectedFiltersContainer.className = 'selected-filters';
+    
+    // Add apply filters button
+    const applyFiltersBtn = document.createElement('button');
+    applyFiltersBtn.id = 'apply-filters';
+    applyFiltersBtn.textContent = 'Apply Filters';
+    
+    // Append all elements to filter container
+    filterContainer.appendChild(categoriesDropdown);
+    filterContainer.appendChild(dateDropdown);
+    filterContainer.appendChild(selectedFiltersContainer);
+    filterContainer.appendChild(applyFiltersBtn);
+}
+
 function initializeFilters() {
     const applyFiltersBtn = document.getElementById('apply-filters');
-    const filterCheckboxes = document.querySelectorAll('.filter-options input[type="checkbox"]');
+    const filterDropdowns = document.querySelectorAll('.filter-dropdown');
+    const selectedFiltersContainer = document.querySelector('.selected-filters');
     
-    // Apply filters when button is clicked
+    // Toggle dropdown on header click
+    filterDropdowns.forEach(dropdown => {
+        const header = dropdown.querySelector('.filter-dropdown-header');
+        header.addEventListener('click', () => {
+            // Close other dropdowns
+            filterDropdowns.forEach(d => {
+                if (d !== dropdown && d.classList.contains('active')) {
+                    d.classList.remove('active');
+                }
+            });
+            
+            // Toggle current dropdown
+            dropdown.classList.toggle('active');
+        });
+        
+        // Handle clear button
+        const clearBtn = dropdown.querySelector('.clear-filters');
+        if (clearBtn) {
+            clearBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const checkboxes = dropdown.querySelectorAll('input[type="checkbox"]');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                updateSelectedFilters();
+            });
+        }
+        
+        // Handle apply button in dropdown
+        const applyBtn = dropdown.querySelector('.apply-filters');
+        if (applyBtn) {
+            applyBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                dropdown.classList.remove('active');
+                updateSelectedFilters();
+                applyFilters(getSelectedFilters());
+            });
+        }
+        
+        // Handle checkbox changes
+        const checkboxes = dropdown.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                updateSelectedFilters();
+            });
+        });
+    });
+    
+    // Apply filters when main button is clicked
     applyFiltersBtn.addEventListener('click', function() {
         const selectedFilters = getSelectedFilters();
         applyFilters(selectedFilters);
     });
     
-    // Make filters collapsible on mobile
-    const filterGroups = document.querySelectorAll('.filter-group h4');
-    filterGroups.forEach(heading => {
-        heading.addEventListener('click', function() {
-            const options = this.nextElementSibling;
-            options.classList.toggle('collapsed');
-            this.classList.toggle('collapsed');
-        });
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.filter-dropdown') && !e.target.closest('#apply-filters')) {
+            filterDropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
     });
+    
+    // Update selected filters display
+    function updateSelectedFilters() {
+        selectedFiltersContainer.innerHTML = '';
+        
+        const allCheckboxes = document.querySelectorAll('.filter-dropdown input[type="checkbox"]:checked');
+        allCheckboxes.forEach(checkbox => {
+            const filterTag = document.createElement('div');
+            filterTag.className = 'selected-filter';
+            filterTag.innerHTML = `
+                ${checkbox.nextElementSibling.textContent}
+                <span class="remove-filter" data-id="${checkbox.id}">×</span>
+            `;
+            selectedFiltersContainer.appendChild(filterTag);
+        });
+        
+        // Add event listeners to remove buttons
+        const removeButtons = document.querySelectorAll('.remove-filter');
+        removeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const checkboxId = button.getAttribute('data-id');
+                const checkbox = document.getElementById(checkboxId);
+                if (checkbox) {
+                    checkbox.checked = false;
+                    updateSelectedFilters();
+                }
+            });
+        });
+    }
 }
 
 function getSelectedFilters() {
@@ -37,13 +209,15 @@ function getSelectedFilters() {
     };
     
     // Get selected category filters
-    const categoryCheckboxes = document.querySelectorAll('.filter-group:nth-child(1) input[type="checkbox"]:checked');
+    const categoryDropdown = document.querySelector('.filter-dropdown:nth-child(1)');
+    const categoryCheckboxes = categoryDropdown.querySelectorAll('input[type="checkbox"]:checked');
     categoryCheckboxes.forEach(checkbox => {
         filters.categories.push(checkbox.value);
     });
     
     // Get selected date filters
-    const dateCheckboxes = document.querySelectorAll('.filter-group:nth-child(2) input[type="checkbox"]:checked');
+    const dateDropdown = document.querySelector('.filter-dropdown:nth-child(2)');
+    const dateCheckboxes = dateDropdown.querySelectorAll('input[type="checkbox"]:checked');
     dateCheckboxes.forEach(checkbox => {
         filters.date.push(checkbox.value);
     });
@@ -188,7 +362,7 @@ function updateArticlesDisplay(articles) {
         
         articles.forEach(article => {
             html += `
-                <div class="article-card" data-category="${article.categories.join(',')}">
+                <div class="article-card" data-category="${article.categories.join(',')}" data-id="${article.id}">
                     <div class="article-image">
                         <img src="${article.image}" alt="${article.title}">
                     </div>
@@ -203,5 +377,21 @@ function updateArticlesDisplay(articles) {
         });
         
         articlesContainer.innerHTML = html;
+        
+        // Reattach event listeners to read more links
+        const readMoreLinks = articlesContainer.querySelectorAll('.read-more');
+        readMoreLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const articleId = this.closest('.article-card').getAttribute('data-id');
+                openArticle(articleId);
+            });
+        });
     }
+}
+
+// Function to open article (placeholder)
+function openArticle(articleId) {
+    console.log('Opening article:', articleId);
+    // This would be implemented to open the article modal
 }

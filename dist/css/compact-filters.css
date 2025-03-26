@@ -41,7 +41,7 @@
     background-color: var(--secondary-bg);
     border-radius: var(--border-radius);
     padding: 0.75rem;
-    z-index: 10;
+    z-index: 1000; /* Increased z-index to ensure proper layering */
     box-shadow: var(--box-shadow);
     display: none;
     max-height: 250px;
