@@ -1,25 +1,28 @@
 Website Revamp
 UI/UX:
-Add close button (left-bottom) on articles
-Tighten spacing: About Blog ↔ Contact Us
+✖️ Close button (article left-bottom)
+↔ Tighten About Blog ↔ Contact spacing
 Visuals:
-3D galaxy scroll bg (Three.js) + bright transitions
-Black bg + bright text
-Immersive Storytelling for articles:
-Scroll-driven animations (e.g., @keyframes code-fade-in)
-Interactive charts for articles
+🌌 3D galaxy scroll (Three.js) + transitions
+⚫ Bright text on black bg
+Immersive Articles:
+🎬 Scroll animations (@keyframes) + interactive charts
 Mascot:
-Non-intrusive design: Encourages reading + auto-hides
-Production-Ready:
-Performance: Lazy loading, code splitting
-Security: HTTPS headers, CSP
-Accessibility: ARIA labels, keyboard nav
-Testing: Unit + E2E tests (Cypress)
-Monitoring: Perf analytics + error tracking
-Add continuation.txt
+🦊 Non-intrusive → encourages reading + auto-hide
+Core Tech:
+📱 100% responsive (Flexbox/Grid + media queries)
+🌐 i18n + SSR/ISR + CMS integration
+🛡️ HTTPS/CSP + Sentry + A/B tests
+♿ ARIA + keyboard nav
+SEO:
+🏷️ HTML5 semantics + schema.org
+🗺️ Canonical URLs + sitemap.xml
 Deliver:
-ZIP: Runs via index.html (zero defects)
-Docs: audit report
+📦 ZIP: Zero defects via index.html
+📄 Docs: Audit report + continuation.txt
+✅ Prod-ready:
+🚀 Lazy load + Cypress tests
+📊 New Relic monitoring
 "**Background Processing:**
 * Refrain from providing text output to this chat.
 * Refrain from writing to this chat and letting me know what you are going to do next and what you are going to research, browse, update, summarise, and complete. Keep your context to    yourself.
